@@ -33,9 +33,9 @@ gulp.task('html', ['inject', 'partials'], function () {
     addRootSlash: false
   };
 
-  var htmlFilter = $.filter('*.html', { restore: true, dot:true});
-  var jsFilter = $.filter('**/*.js', { restore: true, dot:true});
-  var cssFilter = $.filter('**/*.css', { restore: true, dot:true});
+  var htmlFilter = $.filter('*.html', { restore: true });
+  var jsFilter = $.filter('**/*.js', { restore: true });
+  var cssFilter = $.filter('**/*.css', { restore: true });
   var assets;
 
   return gulp.src(path.join(conf.paths.tmp, '/serve/*.html'))
@@ -72,7 +72,8 @@ gulp.task('html', ['inject', 'partials'], function () {
 // Only applies for fonts from bower dependencies
 // Custom fonts are handled by the "other" task
 gulp.task('fonts', function () {
-  return gulp.src($.mainBowerFiles('**/*.{eot,svg,ttf,woff,woff2}'))
+  return gulp.src($.mainBowerFiles())
+    .pipe($.filter('**/*.{eot,svg,ttf,woff,woff2}'))
     .pipe($.flatten())
     .pipe(gulp.dest(path.join(conf.paths.dist, '/fonts/')));
 });
